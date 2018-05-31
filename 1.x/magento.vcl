@@ -4,7 +4,7 @@
 # Copyright (c) 2018 Varnish Software AS
 #
 # This VCL allows for Varnish to cache Magento product pages by
-# decomposing and recomposing content using JSON and Edgestash.
+# decomposing and recomposing content using JSON and Mustache.
 #
 # v1.1
 #
@@ -181,8 +181,8 @@ sub vcl_deliver
     // Response headers
     set resp.http.X-cache = req.http.X-status + " (" + server.identity + ")";
     set resp.http.X-hits = obj.hits;
-    unset beresp.http.X-url;
-    unset beresp.http.X-host;
+    unset resp.http.X-url;
+    unset resp.http.X-host;
 
     // VHA
     if (req.http.vha-fetch) {
