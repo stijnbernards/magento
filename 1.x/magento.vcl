@@ -6,7 +6,7 @@
 # This VCL allows for Varnish to cache Magento product pages by
 # decomposing and recomposing content using JSON and Mustache.
 #
-# v1.1
+# v1.2
 #
 
 vcl 4.0;
@@ -69,6 +69,11 @@ sub vcl_recv
 
     // Always cache for crawlers
     if (req.http.User-Agent ~ "Googlebot|curl|bingbot|YandexBot|Baiduspider") {
+        return (hash);
+    }
+
+    // VHA
+    if (req.http.vha-origin) {
         return (hash);
     }
 
